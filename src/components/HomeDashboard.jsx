@@ -477,7 +477,7 @@ function HeroBanner() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCounterValue(prev => prev + 1);
-    }, 1000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
