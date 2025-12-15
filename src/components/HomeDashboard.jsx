@@ -967,7 +967,7 @@ function BuyboxStatus() {
       className="bg-white rounded-xl p-5"
       style={{ boxShadow: cardShadow }}
     >
-      <h3 className="text-lg font-semibold text-red-600 mb-4">Buybox status</h3>
+      <h3 className="text-lg font-semibold text-yellow-500 mb-4">Buybox status</h3>
 
       <div className="space-y-2">
         {buyboxes.map((buybox) => (
