@@ -71,3 +71,4 @@ El proyecto utiliza el sistema de diseño Kairo de 8020REI:
 ## 📝 Licencia
 
 Proyecto privado - 8020REI © 2025
+# 8020rei-dashboard
