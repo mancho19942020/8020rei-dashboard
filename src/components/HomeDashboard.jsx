@@ -324,11 +324,11 @@ const IconMenu = ({ className = "w-5 h-5" }) => (
 function Sidebar({ collapsed, onToggle }) {
   const navItems = [
     { icon: IconHome, label: 'Home', active: true },
-    { icon: IconChart, label: 'Analytics', active: false },
-    { icon: IconProperties, label: 'Properties', active: false },
-    { icon: IconBuybox, label: 'Buybox', active: false },
-    { icon: IconCampaign, label: 'DM Campaign', active: false },
-    { icon: IconSettings, label: 'Settings', active: false },
+    // { icon: IconChart, label: 'Analytics', active: false },
+    // { icon: IconProperties, label: 'Properties', active: false },
+    // { icon: IconBuybox, label: 'Buybox', active: false },
+    // { icon: IconCampaign, label: 'DM Campaign', active: false },
+    // { icon: IconSettings, label: 'Settings', active: false },
   ];
 
   return (
@@ -473,10 +473,16 @@ function TopBar() {
 function HeroBanner() {
   const [counterValue, setCounterValue] = useState(232);
 
-  // Animate +1 every second as per spec
+  // Animate +1 every 3 seconds as per spec
   useEffect(() => {
     const interval = setInterval(() => {
-      setCounterValue(prev => prev + 1);
+      setCounterValue(prev => {
+        if (prev >= 2000) {
+          clearInterval(interval);
+          return 2000;
+        }
+        return prev + 1;
+      });
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -707,10 +713,7 @@ function ImmediateActionSection() {
   ];
 
   return (
-    <div
-      className="bg-white rounded-xl p-5 h-full"
-      style={{ boxShadow: cardShadow }}
-    >
+    <div className="h-full p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1.5">
@@ -724,15 +727,15 @@ function ImmediateActionSection() {
 
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded transition-colors"
+          className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
         >
-          <IconEdit className="w-3.5 h-3.5" />
+          <IconEdit className="w-4 h-4" />
           Edit
         </button>
       </div>
 
       {/* Cards Grid - 3 columns x 2 rows */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {actionData.map((item) => (
           <ActionCard key={item.distress} {...item} />
         ))}
@@ -867,8 +870,7 @@ function SelectionModal({ selected, onClose, onConfirm }) {
 function DMCampaignCard() {
   return (
     <div
-      className="bg-white rounded-xl p-6 h-full flex flex-col"
-      style={{ boxShadow: cardShadow }}
+      className="h-full p-6 flex flex-col"
     >
       {/* Title */}
       <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -1574,18 +1576,22 @@ export default function HomeDashboard() {
 
         {/* Main scrollable content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-[1280px] mx-auto p-6 space-y-6">
+          <div className="max-w-[1280px] mx-auto p-4 space-y-4">
 
             {/* Hero Banner - Full width */}
             <HeroBanner />
 
-            {/* Row: Immediate Action (8 cols) + DM Campaign (4 cols) */}
-            <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-8">
-                <ImmediateActionSection />
-              </div>
-              <div className="col-span-4">
-                <DMCampaignCard />
+            {/* Unified Action Center */}
+            <div className="bg-white rounded-xl shadow-[0px_1px_3px_0px_rgba(16,24,40,0.1),0px_1px_2px_0px_rgba(16,24,40,0.06)] overflow-hidden">
+              <div className="flex flex-col xl:flex-row divide-y xl:divide-y-0 xl:divide-x divide-gray-200">
+                {/* Immediate Action Section - 8 cols equivalent */}
+                <div className="flex-1 p-0">
+                  <ImmediateActionSection />
+                </div>
+                {/* DM Campaign Section - 4 cols equivalent */}
+                <div className="xl:w-[400px] shrink-0 bg-gray-50/50">
+                  <DMCampaignCard />
+                </div>
               </div>
             </div>
 
